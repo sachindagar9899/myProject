@@ -24,12 +24,11 @@ const dedupeObjectIds = (arr = []) => {
   });
 };
 
-userSchema.pre('save', function dedupeRelations(next) {
+userSchema.pre('save', function dedupeRelations() {
   this.friends = dedupeObjectIds(this.friends);
   this.followers = dedupeObjectIds(this.followers);
   this.following = dedupeObjectIds(this.following);
   this.pendingRequests = dedupeObjectIds(this.pendingRequests);
-  next();
 });
 
 userSchema.index({ username: 'text', email: 'text', mobileNumber: 'text' });

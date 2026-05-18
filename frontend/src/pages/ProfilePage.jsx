@@ -17,8 +17,8 @@ const ProfilePage = () => {
     const fetchProfileData = async () => {
       try {
         const [userRes, postsRes] = await Promise.all([
-          axios.get(`http://localhost:5000/api/users/${authUser?.id}`, { headers: { Authorization: `Bearer ${token}` } }),
-          axios.get(`http://localhost:5000/api/posts/user/${authUser?.id}`, { headers: { Authorization: `Bearer ${token}` } })
+          axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/users/${authUser?.id}`, { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/posts/user/${authUser?.id}`, { headers: { Authorization: `Bearer ${token}` } })
         ]);
         setProfileData(userRes.data);
         setPosts(postsRes.data);
@@ -44,7 +44,7 @@ const ProfilePage = () => {
 
   const handleRequestAction = async (requesterId, action) => {
     try {
-      await axios.post(`http://localhost:5000/api/users/friend-request/${requesterId}/${action}`, {}, {
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/users/friend-request/${requesterId}/${action}`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       // Update local state

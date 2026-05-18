@@ -18,8 +18,10 @@ const transporter = nodemailer.createTransport({
 
 router.post('/register', async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    let { username, email, emailOrMobile, password } = req.body;
+    if (!email && emailOrMobile) email = emailOrMobile;
     
+    if (email) email = email.trim();
     const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     
     if (!isEmail) {
@@ -56,6 +58,7 @@ router.post('/register', async (req, res) => {
 
     res.status(200).json({ message: 'Verification code sent to your email', requireOtp: true });
   } catch (error) {
+    console.error('Register error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
@@ -84,7 +87,8 @@ router.post('/verify-otp', async (req, res) => {
 
 router.post('/forgot-password', async (req, res) => {
   try {
-    const { identifier } = req.body;
+    let { identifier } = req.body;
+    if (identifier) identifier = identifier.trim();
     console.log(`[Forgot Password] Requested for: ${identifier}`);
     
     const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier);

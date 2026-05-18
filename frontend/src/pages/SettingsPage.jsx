@@ -43,7 +43,7 @@ const SettingsPage = () => {
         formData.append('profilePicture', profilePicFile);
       }
 
-      await axios.put('http://localhost:5000/api/settings/profile', formData, {
+      await axios.put(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/settings/profile`, formData, {
         headers: { 
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
@@ -62,7 +62,7 @@ const SettingsPage = () => {
       const updatedData = { ...privacyData, [field]: value };
       setPrivacyData(updatedData);
       
-      await axios.put('http://localhost:5000/api/settings/privacy', updatedData, {
+      await axios.put(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/settings/privacy`, updatedData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessage('Privacy settings saved.');

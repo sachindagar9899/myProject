@@ -13,7 +13,7 @@ const NotificationsPage = () => {
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/users/${user?.id}`, {
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/users/${user?.id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setRequests(res.data.pendingRequests || []);
@@ -28,7 +28,7 @@ const NotificationsPage = () => {
 
   const handleAction = async (id, action) => {
     try {
-      await axios.post(`http://localhost:5000/api/users/friend-request/${id}/${action}`, {}, {
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/users/friend-request/${id}/${action}`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setRequests(prev => prev.filter(req => req._id !== id));

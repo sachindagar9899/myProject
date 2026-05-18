@@ -26,9 +26,9 @@ const PublicProfilePage = () => {
     const fetchProfile = async () => {
       try {
         const [userRes, postsRes, myRes] = await Promise.all([
-          axios.get(`http://localhost:5000/api/users/${id}`, { headers: { Authorization: `Bearer ${token}` } }),
-          axios.get(`http://localhost:5000/api/posts/user/${id}`, { headers: { Authorization: `Bearer ${token}` } }),
-          axios.get(`http://localhost:5000/api/users/${currentUser.id}`, { headers: { Authorization: `Bearer ${token}` } })
+          axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/users/${id}`, { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/posts/user/${id}`, { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/users/${currentUser.id}`, { headers: { Authorization: `Bearer ${token}` } })
         ]);
 
         setProfileUser(userRes.data);
@@ -67,7 +67,7 @@ const PublicProfilePage = () => {
     setActionLoading(true);
     setActionError('');
     try {
-      await axios.post(`http://localhost:5000/api/users/friend-request/${id}`, {}, {
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/users/friend-request/${id}`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setFriendStatus('pending');

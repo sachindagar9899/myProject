@@ -62,7 +62,7 @@ const MessagesPage = () => {
   useEffect(() => {
     const fetchFriends = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/users/${user?.id}`, {
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/users/${user?.id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setFriends(res.data.friends || []);
@@ -77,7 +77,7 @@ const MessagesPage = () => {
     if (userIdFromQuery && token) {
       const fetchTargetUser = async () => {
         try {
-          const res = await axios.get(`http://localhost:5000/api/users/${userIdFromQuery}`, {
+          const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/users/${userIdFromQuery}`, {
             headers: { Authorization: `Bearer ${token}` }
           });
           setSelectedFriend(res.data);
@@ -204,7 +204,7 @@ const MessagesPage = () => {
       if (!selectedFriend) return;
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/messages/${selectedFriend._id}`,
+          `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/messages/${selectedFriend._id}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setMessages(res.data);
@@ -232,7 +232,7 @@ const MessagesPage = () => {
       const formData = new FormData();
       formData.append('media', attachment);
       try {
-        const res = await axios.post('http://localhost:5000/api/messages/upload', formData, {
+        const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/messages/upload`, formData, {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'multipart/form-data'
@@ -363,7 +363,7 @@ const MessagesPage = () => {
                       {msg.mediaUrl && (
                         <div className="mb-2 rounded-xl overflow-hidden max-w-[200px] md:max-w-[250px]">
                           <img
-                            src={msg.mediaUrl.startsWith('http') ? msg.mediaUrl : `http://localhost:5000/${msg.mediaUrl}`}
+                            src={msg.mediaUrl.startsWith('http') ? msg.mediaUrl : `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/${msg.mediaUrl}`}
                             alt="Attachment"
                             className="w-full h-auto object-cover"
                           />

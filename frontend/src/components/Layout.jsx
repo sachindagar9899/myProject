@@ -44,7 +44,7 @@ const Layout = () => {
 
     const fetchPending = async () => {
       try {
-        const userRes = await axios.get(`http://localhost:5000/api/users/${user.id}`, {
+        const userRes = await axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/users/${user.id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setPendingCount(userRes.data.pendingRequests?.length || 0);

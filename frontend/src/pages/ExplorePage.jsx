@@ -12,7 +12,7 @@ const ExplorePage = () => {
   useEffect(() => {
     const fetchExplore = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/explore', {
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/explore`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setPosts(res.data);
@@ -44,7 +44,7 @@ const ExplorePage = () => {
               className="relative aspect-square bg-[#111] overflow-hidden group cursor-pointer rounded-sm md:rounded-xl"
             >
               <img 
-                src={post.mediaUrl ? (post.mediaUrl.startsWith('http') ? post.mediaUrl : `http://localhost:5000/${post.mediaUrl}`) : `https://picsum.photos/600/600?random=${post._id}`} 
+                src={post.mediaUrl ? (post.mediaUrl.startsWith('http') ? post.mediaUrl : `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/${post.mediaUrl}`) : `https://picsum.photos/600/600?random=${post._id}`} 
                 alt="Explore post" 
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
               />

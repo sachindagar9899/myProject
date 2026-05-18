@@ -13,7 +13,7 @@ const StoriesViewer = () => {
   useEffect(() => {
     const fetchStories = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/stories/feed', {
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/stories/feed`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setGroupedStories(res.data);
@@ -134,7 +134,7 @@ const StoriesViewer = () => {
               {/* Story Content */}
               <div className="w-full h-full relative">
                 <img 
-                  src={currentStory.mediaUrl.startsWith('http') ? currentStory.mediaUrl : `http://localhost:5000/${currentStory.mediaUrl}`} 
+                  src={currentStory.mediaUrl.startsWith('http') ? currentStory.mediaUrl : `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/${currentStory.mediaUrl}`} 
                   className="w-full h-full object-cover" 
                   alt="story" 
                 />

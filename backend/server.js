@@ -1,4 +1,6 @@
 require('dotenv').config();
+const dns = require('dns');
+dns.setDefaultResultOrder('ipv4first');
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -35,6 +37,18 @@ const exploreRoutes = require('./routes/explore');
 const storyRoutes = require('./routes/stories');
 const reelRoutes = require('./routes/reels');
 const settingsRoutes = require('./routes/settings');
+
+// Temporary logging middleware to catch 500 errors
+app.use((req, res, next) => {
+  const originalJson = res.json;
+  res.json = function(body) {
+    if (res.statusCode >= 500) {
+      console.error(`[500 ERROR] ${req.method} ${req.url} - `, body);
+    }
+    return originalJson.call(this, body);
+  };
+  next();
+});
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);

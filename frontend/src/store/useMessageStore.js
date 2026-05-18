@@ -12,7 +12,7 @@ const useMessageStore = create((set, get) => ({
   fetchUnread: async (token) => {
     if (!token) return;
     try {
-      const res = await axios.get('http://localhost:5000/api/messages/unread', {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/messages/unread`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       set({
@@ -33,7 +33,7 @@ const useMessageStore = create((set, get) => ({
       return socketInstance;
     }
 
-    const socket = io('http://localhost:5000', { autoConnect: true });
+    const socket = io(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}`, { autoConnect: true });
     socketInstance = socket;
 
     socket.emit('join_room', String(userId));

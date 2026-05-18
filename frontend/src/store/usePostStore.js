@@ -10,7 +10,7 @@ const usePostStore = create((set, get) => ({
     set({ loading: true, error: null });
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/posts/feed', {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/posts/feed`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       set({ posts: res.data, loading: false });
@@ -23,7 +23,7 @@ const usePostStore = create((set, get) => ({
     set({ loading: true, error: null });
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.post('http://localhost:5000/api/posts', formData, {
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/posts`, formData, {
         headers: { 
           Authorization: `Bearer ${token}`,
           // Let browser set content-type for multipart/form-data if it's FormData
@@ -42,7 +42,7 @@ const usePostStore = create((set, get) => ({
   likePost: async (postId) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.post(`http://localhost:5000/api/posts/${postId}/like`, {}, {
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/posts/${postId}/like`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -60,7 +60,7 @@ const usePostStore = create((set, get) => ({
   addComment: async (postId, text) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.post(`http://localhost:5000/api/posts/${postId}/comment`, { text }, {
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/posts/${postId}/comment`, { text }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       

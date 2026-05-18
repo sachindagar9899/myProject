@@ -125,7 +125,7 @@ const HomePage = () => {
               {/* Post Image (if any) */}
               {post.mediaUrl && (
                 <div className="w-full max-h-[600px] bg-[#111]">
-                  <img src={post.mediaUrl.startsWith('http') ? post.mediaUrl : `http://localhost:5000/${post.mediaUrl}`} alt="Post content" className="w-full h-full object-contain" />
+                  <img src={post.mediaUrl.startsWith('http') ? post.mediaUrl : `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/${post.mediaUrl}`} alt="Post content" className="w-full h-full object-contain" />
                 </div>
               )}
 

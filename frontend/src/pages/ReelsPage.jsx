@@ -13,7 +13,7 @@ const ReelsPage = () => {
   useEffect(() => {
     const fetchReels = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/reels/feed', {
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/reels/feed`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setReels(res.data);
@@ -39,7 +39,7 @@ const ReelsPage = () => {
 
   const likeReel = async (id, index) => {
     try {
-      const res = await axios.post(`http://localhost:5000/api/reels/${id}/like`, {}, {
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/reels/${id}/like`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const newReels = [...reels];
@@ -75,7 +75,7 @@ const ReelsPage = () => {
             */}
             {/* Mock video with an image for now if it's an image or placeholder */}
             <img 
-              src={reel.videoUrl.startsWith('http') ? reel.videoUrl : `http://localhost:5000/${reel.videoUrl}`} 
+              src={reel.videoUrl.startsWith('http') ? reel.videoUrl : `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/${reel.videoUrl}`} 
               alt="Reel" 
               className="w-full h-full object-cover" 
             />

@@ -29,7 +29,7 @@ const SearchBar = () => {
         return;
       }
       try {
-        const res = await axios.get(`http://localhost:5000/api/explore/search?q=${query}`, {
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/explore/search?q=${query}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setResults(res.data);

@@ -14,7 +14,7 @@ const useAuthStore = create((set) => ({
     
     set({ loading: true });
     try {
-      const res = await axios.get('http://localhost:5000/api/auth/me', {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/auth/me`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       // Map _id to id so it matches login response structure
@@ -37,7 +37,7 @@ const useAuthStore = create((set) => ({
   login: async (emailOrMobile, password) => {
     set({ loading: true, error: null });
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', { emailOrMobile, password });
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/auth/login`, { emailOrMobile, password });
       localStorage.setItem('token', res.data.token);
       set({ user: res.data.user, token: res.data.token, isAuthenticated: true, loading: false });
     } catch (err) {
@@ -48,7 +48,7 @@ const useAuthStore = create((set) => ({
   register: async (username, emailOrMobile, password) => {
     set({ loading: true, error: null });
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/register', { username, emailOrMobile, password });
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/auth/register`, { username, emailOrMobile, password });
       set({ loading: false });
       return res.data; // returns { message, requireOtp: true }
     } catch (err) {
@@ -60,7 +60,7 @@ const useAuthStore = create((set) => ({
   verifyOtp: async (identifier, otp) => {
     set({ loading: true, error: null });
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/verify-otp', { identifier, otp });
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/auth/verify-otp`, { identifier, otp });
       localStorage.setItem('token', res.data.token);
       set({ user: res.data.user, token: res.data.token, isAuthenticated: true, loading: false });
       return true;
@@ -73,7 +73,7 @@ const useAuthStore = create((set) => ({
   forgotPassword: async (identifier) => {
     set({ loading: true, error: null });
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/forgot-password', { identifier });
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/auth/forgot-password`, { identifier });
       set({ loading: false });
       return res.data;
     } catch (err) {
@@ -85,7 +85,7 @@ const useAuthStore = create((set) => ({
   resetPassword: async (identifier, otp, newPassword) => {
     set({ loading: true, error: null });
     try {
-      await axios.post('http://localhost:5000/api/auth/reset-password', { identifier, otp, newPassword });
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/auth/reset-password`, { identifier, otp, newPassword });
       set({ loading: false });
       return true;
     } catch (err) {
